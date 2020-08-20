@@ -18,8 +18,4 @@
     <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-nightly-00711" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="NewFolder\" />
-  </ItemGroup>
-
 </Project>

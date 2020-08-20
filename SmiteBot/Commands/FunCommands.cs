@@ -41,7 +41,16 @@ namespace SmiteBot.Commands
 
         public List<string> GetVoiceChannelUsers(CommandContext ctx)
         {
-            ulong scrimChannel = 590588036425842690;
+            // Gets the voicechannel the user is in.
+            DiscordChannel currentChannel = ctx.Member.VoiceState.Channel;
+            if (currentChannel == null)
+            {
+                // Return error when no channel is found.
+                ctx.Channel.SendMessageAsync("User not active in voice channel.");
+                return null;
+            }
+
+            // Create a dictionary with every channel from the server and fill it.
             Dictionary<ulong, DiscordChannel> channelList = new Dictionary<ulong, DiscordChannel>();
             List<string> usersInChannel = new List<string>();
 
@@ -50,9 +59,11 @@ namespace SmiteBot.Commands
                 channelList.Add(channel.Key, channel.Value);
             }
 
+            // Check if one of the servers has the same key as the voicechannel the user is in.
+            // Adds all user in voicechannel to list when match is found.
             foreach (var ch in channelList)
             {
-                if (ch.Key == scrimChannel)
+                if (ch.Key == currentChannel.Id)
                 {
                     foreach (var user in ch.Value.Users)
                     {
@@ -89,6 +100,7 @@ namespace SmiteBot.Commands
             string team2string = null;
             ShuffleList(usersInChannel);
 
+            // Checks if amount of people to split into 2 teams is even.
             if (userAmount%2 == 0 && usersInChannel.Count > 0)
             {
                 while (userAmount != 0)
@@ -163,6 +175,12 @@ namespace SmiteBot.Commands
             var results = distinctRestult.Select(x => $"{x.Emoji}: {x.Total}");
 
             await ctx.Channel.SendMessageAsync(string.Join("\n", results)).ConfigureAwait(false);
+        }
+
+        [Command("dialogue")]
+        public async Task Dialogue(CommandContext command)
+        {
+            string input = string.Empty;
         }
     }
 }

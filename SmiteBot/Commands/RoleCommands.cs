@@ -42,40 +42,12 @@ namespace SmiteBot.Commands
             var reactionResult = await interactivity.WaitForReactionAsync(
                 x => x.Message == welcomeMessage &&
                 x.User == ctx.User &&
-                (x.Emoji == support || x.Emoji == adc || x.Emoji == mid || x.Emoji == jungle || x.Emoji == solo)).ConfigureAwait(false);
+                (x.Emoji == support || x.Emoji == adc || x.Emoji == mid || x.Emoji == jungle || x.Emoji == solo));
 
-            // Rollen toekennen op basis van gekozen emoji.
             if (reactionResult.Result.Emoji == support)
             {
                 var role = ctx.Guild.GetRole(632872210750767106);
-                await ctx.Member.GrantRoleAsync(role);
             }
-
-            else if (reactionResult.Result.Emoji == adc)
-            {
-                var role = ctx.Guild.GetRole(632871942281625641);
-                await ctx.Member.GrantRoleAsync(role);
-            }
-
-            else if (reactionResult.Result.Emoji == mid)
-            {
-                var role = ctx.Guild.GetRole(632871837272899635);
-                await ctx.Member.GrantRoleAsync(role);
-            }
-
-            else if (reactionResult.Result.Emoji == jungle)
-            {
-                var role = ctx.Guild.GetRole(632872340195246081);
-                await ctx.Member.GrantRoleAsync(role);
-            }
-
-            else if (reactionResult.Result.Emoji == solo)
-            {
-                var role = ctx.Guild.GetRole(632871489086947348);
-                await ctx.Member.GrantRoleAsync(role);
-            }
-
-            await welcomeMessage.DeleteAsync().ConfigureAwait(false);
         }
     }
 }
